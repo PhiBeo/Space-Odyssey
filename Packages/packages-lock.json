@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.domybest.mybox": {
+      "version": "file:C:/Users/Yarts/Downloads/MyBox-master/MyBox-master",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "9.1.1",
       "depth": 1,
