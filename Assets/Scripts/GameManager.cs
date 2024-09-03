@@ -1,7 +1,5 @@
 using MyBox;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -15,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float fastPace = 2.0f;
 
     //Logical Variables
+    [Header("Debug Values")]
     [ReadOnly, SerializeField]private float currentGamePace;
     [ReadOnly, SerializeField]private Speed speed;
     private bool lastCheckpoint = false;
@@ -23,10 +22,13 @@ public class GameManager : MonoBehaviour
     public Action OnPaceChange;
     public Action OnEnterCheckpoint;
     public Action OnExitCheckpoint;
+    public Action OnEnterLandmark;
+    public Action OnExitLandmark;
     public Action OnReachGoal;
-    public Action OnOutOfFuel;
-    public Action OnOutOfFood;
-    public Action OnOutOfTool;
+    public Action OnNotEnoughItem;
+    public Action OnNotEnoughMoney;
+
+    private SceneManager sceneManager;
 
     void Awake()
     {
@@ -48,9 +50,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        sceneManager = FindAnyObjectByType<SceneManager>();
         currentGamePace = defaultPace;
         speed = Speed.normal;
         lastCheckpoint = false;
+    }
+
+    public void Gameover()
+    {
+        currentGamePace = 0;
+        speed = Speed.stop;
+        sceneManager.GameoverScene();
     }
 
     public void EnterCheckpoint()
@@ -67,6 +77,20 @@ public class GameManager : MonoBehaviour
         OnExitCheckpoint?.Invoke();
     }
 
+    public void EnterLandmark(LandmarkType type)
+    {
+        currentGamePace = 0;
+        speed = Speed.stop;
+        OnEnterLandmark?.Invoke();
+    }
+
+    public void ExitLandmark()
+    {
+        currentGamePace = defaultPace;
+        speed = Speed.normal;
+        OnExitLandmark?.Invoke();
+    }
+
     public void ReachGoal()
     {
         currentGamePace = 0;
@@ -75,21 +99,14 @@ public class GameManager : MonoBehaviour
         OnReachGoal?.Invoke();
     }
 
-    public void OutOfFuel()
+    public void NotEnoughMoney()
     {
-        currentGamePace = 0;
-        speed = Speed.stop;
-        OnOutOfFuel?.Invoke();
+        OnNotEnoughMoney?.Invoke();
     }
 
-    public void OutOfFood()
+    public void NotEnoughItem()
     {
-        OnOutOfFood?.Invoke();
-    }
-
-    public void OutOfTool()
-    {
-        OnOutOfTool?.Invoke();
+        OnNotEnoughItem?.Invoke();
     }
 
     public void SetSlowSpeed()

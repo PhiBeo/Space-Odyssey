@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using MyBox;
 using TMPro;
-using System.Collections.Generic;
 
 public class IncrementCalenderTime : MonoBehaviour
 {
@@ -11,10 +10,11 @@ public class IncrementCalenderTime : MonoBehaviour
     [SerializeField] private int initMonth = 5;
     [SerializeField] private int initYear = 2035;
 
+    [Header("Logical Values")]
     [SerializeField, Range(0.1f, 5.0f)] private float timeIncreaseRate = 1.0f;
-
     [SerializeField] private TextMeshProUGUI text;
 
+    [Header("Debug Values")]
     [ReadOnly, SerializeField] private int day;
     [ReadOnly, SerializeField] private int month;
     [ReadOnly, SerializeField] private int year;
@@ -23,7 +23,6 @@ public class IncrementCalenderTime : MonoBehaviour
     private float time;
     [ReadOnly, SerializeField] private bool isRunning = true;
 
-    // Start is called before the first frame update
     void Start()
     {
         currentTime = new DateTime(initYear, initMonth, initDay);
@@ -37,7 +36,6 @@ public class IncrementCalenderTime : MonoBehaviour
         GameManager.instance.OnExitCheckpoint += ExitCheckpoint;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!isRunning) return;

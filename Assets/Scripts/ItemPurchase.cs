@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -12,8 +10,11 @@ public class ItemPurchase : MonoBehaviour
     [SerializeField] private TextMeshProUGUI quantity;
     [SerializeField] private TextMeshProUGUI price;
     [SerializeField] private TextMeshProUGUI amountPerPurchase;
+    [SerializeField] private TextMeshProUGUI totalOfPurchase;
 
     public Action OnItemPurchase;
+    public Action OnNotEnoughMoney;
+    public Action OnNotEnoughItem;
 
     private Resources resources;
 
@@ -41,20 +42,36 @@ public class ItemPurchase : MonoBehaviour
     }
     public void BuyItem()
     {
-        if (resources.GetMoney <= 0) return;
-        if(itemData.quantity * itemData.price > resources.GetMoney) return;
+        if (resources.GetMoney <= 0 || itemData.quantity * itemData.price > resources.GetMoney)
+        {
+            GameManager.instance.NotEnoughMoney();
+            return;
+        }
 
-        resources.AddItem((ItemId)itemData.id, itemData.quantity);
+        resources.AddItem((ItemId)itemData.id, itemData.quantity, itemData.perPurchase);
         resources.MoneyCalculation(-(itemData.quantity * itemData.price));
 
         UpdateUI();
+    }
+
+    public void SellItem()
+    {
+        if (itemData.quantity * itemData.perPurchase > resources.CheckItemAmount(itemData.id))
+        {
+            GameManager.instance.NotEnoughItem();
+            return;
+        }
+
+        resources.RemoveItem((ItemId)itemData.id, itemData.quantity, itemData.perPurchase);
+        resources.MoneyCalculation(itemData.quantity * itemData.price);
     }
     public void UpdateUI()
     {
         itemName.text = itemData.name;
         quantity.text = itemData.quantity.ToString();
-        price.text = (itemData.quantity * itemData.price).ToString();
+        price.text = itemData.price.ToString();
         amountPerPurchase.text = itemData.perPurchase.ToString();
+        totalOfPurchase.text = (itemData.quantity * itemData.price).ToString();
         OnItemPurchase?.Invoke();
     }
 }

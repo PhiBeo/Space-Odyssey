@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class Resources : MonoBehaviour
 {
@@ -13,10 +12,9 @@ public class Resources : MonoBehaviour
     [Header("Initial Econemy")]
     [SerializeField] private int startMoney = 1000;
 
+    [Header("Debug Values")]
     [ReadOnly, SerializeField] private int currentFuel = 1000;
-    [ReadOnly, SerializeField] private int currentPart1 = 0;
-    [ReadOnly, SerializeField] private int currentPart2 = 0;
-    [ReadOnly, SerializeField] private int currentPart3 = 0;
+    [ReadOnly, SerializeField] private int currentTool = 0;
     [ReadOnly, SerializeField] private int currentMoney = 0;
 
     private float floatFuel;
@@ -33,7 +31,7 @@ public class Resources : MonoBehaviour
 
         if (currentFuel <= 0)
         {
-            GameManager.instance.OutOfFuel();
+            GameManager.instance.Gameover();
         }
     }
 
@@ -63,21 +61,28 @@ public class Resources : MonoBehaviour
         }
     }
 
-    public void AddItem(ItemId id, int amount)
+    public void AddItem(ItemId id, int amount, int perPurchase)
     {
         switch (id) 
         {
             case ItemId.fuel:
-                currentFuel += amount;
+                currentFuel += amount * perPurchase;
                 break;
-            case ItemId.part1:
-                currentPart1 += amount;
+            case ItemId.tool:
+                currentTool += amount * perPurchase;
                 break;
-            case ItemId.part2:
-                currentPart2 += amount;
+        }
+    }
+
+    public void RemoveItem(ItemId id, int amount, int perPurchase) 
+    {
+        switch (id)
+        {
+            case ItemId.fuel:
+                currentFuel -= amount * perPurchase;
                 break;
-            case ItemId.part3:
-                currentPart3 += amount;
+            case ItemId.tool:
+                currentTool -= amount * perPurchase;
                 break;
         }
     }
@@ -85,6 +90,19 @@ public class Resources : MonoBehaviour
     public void MoneyCalculation(int amount)
     {
         currentMoney += amount;
+    }
+
+    public int CheckItemAmount(ItemId id)
+    {
+        switch (id)
+        {
+            case ItemId.fuel:
+                return currentFuel;
+            case ItemId.tool:
+                return currentTool;
+            default:
+                return 0;
+        }
     }
 
     public int GetMoney { get => currentMoney; }

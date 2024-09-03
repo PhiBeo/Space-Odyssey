@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
@@ -15,11 +14,12 @@ public struct Checkpoint
 public class Checkpoints : MonoBehaviour
 {
     [SerializeField] private List<Checkpoint> checkpoints;
-
     [SerializeField] private TextMeshProUGUI checkpointName;
 
+    [Header("Debug Values")]
     [ReadOnly, SerializeField] private int currentCheckpoint;
     [ReadOnly, SerializeField] private float currentDistance;
+
     void Start()
     {
         currentCheckpoint = 0;
@@ -55,4 +55,11 @@ public class Checkpoints : MonoBehaviour
         currentCheckpoint++;
         GameManager.instance.ExitCheckpoint();
     }
+
+    public float GetTotalDistance()
+    {
+        return checkpoints[checkpoints.Count - 1].distance;
+    }
+
+    public float GetCurrentDistance => currentDistance;
 }
