@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("Debug Values")]
     [ReadOnly, SerializeField]private float currentGamePace;
     [ReadOnly, SerializeField]private Speed speed;
+    [ReadOnly, SerializeField] private LandmarkType currentLandmarkType = LandmarkType.None;
     private bool lastCheckpoint = false;
 
     //Events
@@ -27,6 +28,13 @@ public class GameManager : MonoBehaviour
     public Action OnReachGoal;
     public Action OnNotEnoughItem;
     public Action OnNotEnoughMoney;
+
+    //Landmark Events
+    public Action OnEnterRockBelt;
+    public Action OnMeetingPirate;
+    public Action OnMeetingAlien;
+    public Action OnEnterShipYard;
+    public Action OnEnterResourcePlanet;
 
     private SceneManager sceneManager;
 
@@ -81,6 +89,7 @@ public class GameManager : MonoBehaviour
     {
         currentGamePace = 0;
         speed = Speed.stop;
+        currentLandmarkType = type;
         OnEnterLandmark?.Invoke();
     }
 
@@ -89,6 +98,7 @@ public class GameManager : MonoBehaviour
         currentGamePace = defaultPace;
         speed = Speed.normal;
         OnExitLandmark?.Invoke();
+        currentLandmarkType = LandmarkType.None;
     }
 
     public void ReachGoal()
@@ -130,4 +140,5 @@ public class GameManager : MonoBehaviour
     public float GetGameSpeed => currentGamePace;
     public bool IsFinish { get => lastCheckpoint; }
     public Speed Speed { get => speed; }
+    public LandmarkType GetLandmarkType => currentLandmarkType;
 }

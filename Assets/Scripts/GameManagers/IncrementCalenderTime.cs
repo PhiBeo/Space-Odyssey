@@ -92,4 +92,6 @@ public class IncrementCalenderTime : MonoBehaviour
             GlobalData.monthNumToString[currentTime.Month] + " " + 
             currentTime.Year;
     }
+
+    public float GetRate => timeIncreaseRate;
 }

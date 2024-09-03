@@ -10,8 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject popupUI;
     [SerializeField] private GameObject popupMoneyUI;
     [SerializeField] private GameObject popupItemUI;
-    [SerializeField] private GameObject landmarkUI;
-    private Tween fadeTween;
+
     private void Start()
     {
         gameplayUI.SetActive(true);
@@ -23,8 +22,6 @@ public class UIManager : MonoBehaviour
 
         GameManager.instance.OnEnterCheckpoint += EnterCheckpoint;
         GameManager.instance.OnExitCheckpoint += ExitCheckpoint;
-        GameManager.instance.OnEnterLandmark += EnterLandmark;
-        GameManager.instance.OnExitLandmark += ExitLandmark;
         GameManager.instance.OnReachGoal += ReachGoal;
         GameManager.instance.OnNotEnoughItem += NotEnoughItem;
         GameManager.instance.OnNotEnoughMoney += NotEnoughMoney;
@@ -49,16 +46,6 @@ public class UIManager : MonoBehaviour
     {
         gameplayUI.SetActive(true);
         checkpointUI.SetActive(false);
-    }
-
-    void EnterLandmark()
-    {
-
-    }
-
-    void ExitLandmark()
-    {
-
     }
 
     void ReachGoal()

@@ -10,7 +10,6 @@ public class ShipUI : MonoBehaviour
 
     private Ship ship;
 
-    private float maxHealth = 100;
     void Start()
     {
         ship = FindAnyObjectByType<Ship>();
@@ -19,7 +18,7 @@ public class ShipUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float shipHealth = ship.GetHealth / maxHealth;
+        float shipHealth = ship.GetHealth / ship.GetMaxHealth;
         healthSlider.value = shipHealth;
 
         fueltext.text = ship.GetFuel.ToString();

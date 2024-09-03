@@ -16,9 +16,11 @@ public class LandmarkLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
         {
             GameManager.instance.EnterLandmark(landmarkData.landmarkDatas.type);
+            var box = GetComponent<BoxCollider2D>();
+            Destroy(box);
         }
     }
 

@@ -4,9 +4,12 @@ using UnityEngine;
 [Serializable]
 public enum LandmarkType
 {
-    socialize,
-    sightseeing,
-    obstacle
+    None,
+    RockBelt,
+    Pirate,
+    Alien,
+    ShipYard,
+    Resource
 }
 
 [CreateAssetMenu(fileName = "New Landmark", menuName = "Landmark")]

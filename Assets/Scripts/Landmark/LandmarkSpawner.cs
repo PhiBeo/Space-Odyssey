@@ -20,6 +20,7 @@ public class LandmarkSpawner : MonoBehaviour
     [Header("Landmarks")]
     [SerializeField] private List<Lanmark> landmarksSciptableObj;
     [SerializeField] private GameObject landmarkPrefab;
+    [SerializeField] private Transform landmarkParent;
 
     [Header("Debug Values")]
     [ReadOnly, SerializeField] private int numberOfLandmark;
@@ -64,7 +65,7 @@ public class LandmarkSpawner : MonoBehaviour
     {
         for(int i = 0; i < numberOfLandmark; i++)
         {
-            GameObject newLandmark = Instantiate(landmarkPrefab, new Vector3(landmarks[i].position, 0,0), Quaternion.identity);
+            GameObject newLandmark = Instantiate(landmarkPrefab, new Vector3(landmarks[i].position, 0,0), Quaternion.identity, landmarkParent);
             newLandmark.GetComponent<LandmarkLogic>().SetData(landmarks[i]);
         }
     }

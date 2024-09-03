@@ -3,6 +3,8 @@ using MyBox;
 
 public class Ship : MonoBehaviour
 {
+    [SerializeField] private float maxHealth = 100f;
+
     [Header("Heath Drain Variable")]
     [SerializeField, Range(0f, 3f)] private float defaultSpeed = 0.1f;
     [SerializeField, Range(0f, 3f)] private float slowSpeed = 0.05f;
@@ -14,7 +16,7 @@ public class Ship : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float changeOfHappen = 10f;
 
     [Header("Debug Values")]
-    [ReadOnly, SerializeField] private float currentHealh = 100;
+    [ReadOnly, SerializeField] private float currentHealh;
     [ReadOnly, SerializeField] private bool isDamage;
     private float currentHealthDrainSpeed;
     private Resources resources;
@@ -23,6 +25,7 @@ public class Ship : MonoBehaviour
     {
         resources = FindAnyObjectByType<Resources>();
         currentHealthDrainSpeed = defaultSpeed;
+        currentHealh = maxHealth;
     }
 
 
@@ -73,6 +76,17 @@ public class Ship : MonoBehaviour
         //event that can happen when ship is damage
     }
 
+    public void FullHealing()
+    {
+        currentHealh = maxHealth;
+    }
+
+    public void PartialHealing(float amount)
+    {
+        currentHealh += amount;
+        if (currentHealh > maxHealth) currentHealh = maxHealth;
+    }
+
     public bool IsAlive()
     {
         return currentHealh > 0;
@@ -81,4 +95,5 @@ public class Ship : MonoBehaviour
     public float GetHealth => currentHealh;
     public float GetFuel => resources.GetFuel;
     public float GetTool => resources.GetTool;
+    public float GetMaxHealth => maxHealth;
 }
