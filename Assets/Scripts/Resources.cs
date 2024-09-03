@@ -17,12 +17,11 @@ public class Resources : MonoBehaviour
     [ReadOnly, SerializeField] private int currentTool = 0;
     [ReadOnly, SerializeField] private int currentMoney = 0;
 
-    private float floatFuel;
+    private float floatFuel = 0;
 
     private void Start()
     {
         currentMoney = startMoney;
-        floatFuel = currentFuel;
     }
 
     private void Update()
@@ -105,6 +104,7 @@ public class Resources : MonoBehaviour
         }
     }
 
-    public int GetMoney { get => currentMoney; }
-    
+    public int GetMoney => currentMoney; 
+    public float GetFuel => currentFuel;
+    public int GetTool => currentTool;
 }

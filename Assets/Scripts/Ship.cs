@@ -78,5 +78,7 @@ public class Ship : MonoBehaviour
         return currentHealh > 0;
     }
 
-
+    public float GetHealth => currentHealh;
+    public float GetFuel => resources.GetFuel;
+    public float GetTool => resources.GetTool;
 }
