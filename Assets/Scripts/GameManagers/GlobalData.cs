@@ -8,6 +8,13 @@ public enum Speed
     fast
 }
 
+public enum GameoverType
+{ 
+    caught,
+    fuel,
+    health
+}
+
 public static class GlobalData
 {
     public static Dictionary<int, string> monthNumToString = new Dictionary<int, string>()

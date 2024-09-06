@@ -3,7 +3,7 @@ using MyBox;
 
 public class Ship : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float maxHealth = 10000f;
 
     [Header("Heath Drain Variable")]
     [SerializeField, Range(0f, 3f)] private float defaultSpeed = 0.1f;
@@ -15,9 +15,14 @@ public class Ship : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float percentageStartedThreshold = 70f;
     [SerializeField, Range(0f, 100f)] private float changeOfHappen = 10f;
 
+    [Header("Ship trail")]
+    [SerializeField] private Sprite[] shipTrailSprites = new Sprite[3];
+    [SerializeField] private SpriteRenderer trailRender;
+
     [Header("Debug Values")]
     [ReadOnly, SerializeField] private float currentHealh;
     [ReadOnly, SerializeField] private bool isDamage;
+    [ReadOnly, SerializeField] private float currentDistance;
     private float currentHealthDrainSpeed;
     private Resources resources;
 
@@ -32,27 +37,37 @@ public class Ship : MonoBehaviour
     void Update()
     {
         if (!IsAlive()) return;
-        
+
+        currentDistance += GameManager.instance.GetGameSpeed * Time.deltaTime;
+
         CheckSpeed();
         currentHealh -= currentHealthDrainSpeed * Time.deltaTime;
         if(!IsAlive())
         {
-            GameManager.instance.Gameover();
+            GameManager.instance.Gameover(GameoverType.health);
         }
     }
 
     void CheckSpeed()
     {
+        trailRender.enabled = (GameManager.instance.Speed == Speed.stop ? false : true);
         switch (GameManager.instance.Speed)
         {
             case Speed.stop:
-                currentHealthDrainSpeed = 0f; break;
+                currentHealthDrainSpeed = 0f;
+                break;
             case Speed.slow:
-                currentHealthDrainSpeed = slowSpeed; break;
+                currentHealthDrainSpeed = slowSpeed;
+                trailRender.sprite = shipTrailSprites[0];
+                break;
             case Speed.fast:
-                currentHealthDrainSpeed = fastSpeed; break;
+                currentHealthDrainSpeed = fastSpeed;
+                trailRender.sprite = shipTrailSprites[2];
+                break;
             case Speed.normal:
-                currentHealthDrainSpeed = defaultSpeed; break;
+                currentHealthDrainSpeed = defaultSpeed;
+                trailRender.sprite = shipTrailSprites[1];
+                break;
         }
     }
 
@@ -96,4 +111,5 @@ public class Ship : MonoBehaviour
     public float GetFuel => resources.GetFuel;
     public float GetTool => resources.GetTool;
     public float GetMaxHealth => maxHealth;
+    public float GetCurrentDistance => currentDistance;
 }

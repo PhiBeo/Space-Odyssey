@@ -14,46 +14,51 @@ public struct Checkpoint
 
 public class Checkpoints : MonoBehaviour
 {
+    [Header("Checkpoints Values")]
     [SerializeField] private List<Checkpoint> checkpoints;
     [SerializeField] private TextMeshProUGUI checkpointName;
 
     [SerializeField] private GameObject checkPointPrefab;
     [SerializeField] private Transform checkPointParent;
     [SerializeField] private int costOfResting = 2;
+
+    [Header("UI Values")]
+    [SerializeField] private TextMeshProUGUI nextCheckpointDistanceText;
+    [SerializeField] private TextMeshProUGUI currentDistanceText;
     
     [Header("Debug Values")]
-    [ReadOnly, SerializeField] private int currentCheckpoint;
-    [ReadOnly, SerializeField] private float currentDistance;
+    [ReadOnly, SerializeField] private int nextCheckpoint;
     [ReadOnly, SerializeField] private int daysOfStaying = 1;
 
-
+    private Ship ship;
     void Start()
     {
-        currentCheckpoint = 0;
-        currentDistance = 0;
+        ship = FindAnyObjectByType<Ship>();
+        nextCheckpoint = 0;
         SpawnCheckpoint();
     }
 
     void Update()
     {
-        if(GameManager.instance.GetGameSpeed > 0)
-            currentDistance += GameManager.instance.GetGameSpeed * Time.deltaTime;
-
-        if(currentDistance >= checkpoints[currentCheckpoint].distance)
+        if(ship.GetCurrentDistance >= checkpoints[nextCheckpoint].distance)
         {
             UpdateText();
-            if(currentCheckpoint >= checkpoints.Count - 1)
+            if(nextCheckpoint >= checkpoints.Count - 1)
             {
                 GameManager.instance.ReachGoal();
             }
             else
+            {
                 GameManager.instance.EnterCheckpoint();
+            }
         }
+
+        UpdateUI();
     }
 
     private void UpdateText()
     {
-        checkpointName.text = checkpoints[currentCheckpoint].name;
+        checkpointName.text = checkpoints[nextCheckpoint].name;
     }
 
     private void SpawnCheckpoint()
@@ -66,11 +71,17 @@ public class Checkpoints : MonoBehaviour
         }
     }
 
+    private void UpdateUI()
+    {
+        nextCheckpointDistanceText.text = Mathf.RoundToInt(GetNextCheckpointDistance()).ToString() + " Units";
+        currentDistanceText.text = Mathf.RoundToInt(ship.GetCurrentDistance).ToString() + " Units";
+    }
+
     public void NextCheckpoint()
     {
-        if (currentCheckpoint >= checkpoints.Count - 1) return;
+        if (nextCheckpoint >= checkpoints.Count - 1) return;
 
-        currentCheckpoint++;
+        nextCheckpoint++;
         GameManager.instance.ExitCheckpoint();
 
         FindAnyObjectByType<Police>().SkipTheDay(daysOfStaying);
@@ -87,5 +98,8 @@ public class Checkpoints : MonoBehaviour
         FindAnyObjectByType<Ship>().FullHealing();
     }
 
-    public float GetCurrentDistance => currentDistance;
+    public float GetNextCheckpointDistance()
+    {
+        return checkpoints[nextCheckpoint].distance - ship.GetCurrentDistance;
+    }
 }

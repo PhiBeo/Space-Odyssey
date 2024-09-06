@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [ReadOnly, SerializeField]private float currentGamePace;
     [ReadOnly, SerializeField]private Speed speed;
     [ReadOnly, SerializeField] private LandmarkType currentLandmarkType = LandmarkType.None;
+    [ReadOnly, SerializeField] private GameoverType gameoverType;
     private bool lastCheckpoint = false;
 
     //Events
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     public Action OnEnterShipYard;
     public Action OnEnterResourcePlanet;
 
-    private SceneManager sceneManager;
+    private ScenesManager sceneManager;
 
     void Awake()
     {
@@ -58,14 +59,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        sceneManager = FindAnyObjectByType<SceneManager>();
+        sceneManager = FindAnyObjectByType<ScenesManager>();
         currentGamePace = defaultPace;
         speed = Speed.normal;
         lastCheckpoint = false;
     }
 
-    public void Gameover()
+    public void Gameover(GameoverType type)
     {
+        gameoverType = type;
         currentGamePace = 0;
         speed = Speed.stop;
         sceneManager.GameoverScene();
@@ -107,6 +109,7 @@ public class GameManager : MonoBehaviour
         speed = Speed.stop;
         lastCheckpoint = true;
         OnReachGoal?.Invoke();
+        sceneManager.GameWinScene();
     }
 
     public void NotEnoughMoney()
@@ -135,6 +138,12 @@ public class GameManager : MonoBehaviour
     {
         speed = Speed.normal;
         currentGamePace = defaultPace;
+    }
+
+    public void ShipSetting()
+    {
+        speed = Speed.stop;
+        currentGamePace = 0;
     }
 
     public float GetGameSpeed => currentGamePace;

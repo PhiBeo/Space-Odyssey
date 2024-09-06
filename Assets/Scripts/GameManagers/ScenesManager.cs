@@ -1,15 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManager : MonoBehaviour
+public class ScenesManager : MonoBehaviour
 {
     public void GameoverScene()
     {
-
+        SceneManager.LoadScene("GameOver");
     }
 
     public void GameWinScene()
     {
-
+        SceneManager.LoadScene("GameWin");
     }
 }

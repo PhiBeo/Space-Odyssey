@@ -13,7 +13,7 @@ public class Resources : MonoBehaviour
     [SerializeField] private int startMoney = 1000;
 
     [Header("Debug Values")]
-    [ReadOnly, SerializeField] private int currentFuel = 1000;
+    [ReadOnly, SerializeField] private int currentFuel = 100000;
     [ReadOnly, SerializeField] private int currentTool = 0;
     [ReadOnly, SerializeField] private int currentMoney = 0;
 
@@ -30,7 +30,7 @@ public class Resources : MonoBehaviour
 
         if (currentFuel <= 0)
         {
-            GameManager.instance.Gameover();
+            GameManager.instance.Gameover(GameoverType.fuel);
         }
     }
 

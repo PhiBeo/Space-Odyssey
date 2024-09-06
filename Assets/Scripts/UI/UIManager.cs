@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
     void ReachGoal()
     {
         gameplayUI.SetActive(false);
-        checkpointUI.SetActive(true);
+        checkpointUI.SetActive(false);
     }
 
     void NotEnoughMoney()
