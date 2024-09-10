@@ -13,7 +13,7 @@ public class Resources : MonoBehaviour
     [SerializeField] private int startMoney = 1000;
 
     [Header("Debug Values")]
-    [ReadOnly, SerializeField] private int currentFuel = 100000;
+    [ReadOnly, SerializeField] private int currentFuel = 50;
     [ReadOnly, SerializeField] private int currentTool = 0;
     [ReadOnly, SerializeField] private int currentMoney = 0;
 
@@ -26,6 +26,8 @@ public class Resources : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.instance.IsRunning) return;
+
         UpdateFuel();
 
         if (currentFuel <= 0)
@@ -58,6 +60,11 @@ public class Resources : MonoBehaviour
             currentFuel -= 2;
             floatFuel = 0f;
         }
+    }
+
+    public void AddMoney(int amount)
+    {
+        currentMoney += amount;
     }
 
     public void AddItem(ItemId id, int amount, int perPurchase)

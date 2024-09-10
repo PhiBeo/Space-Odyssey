@@ -34,13 +34,15 @@ public class Checkpoints : MonoBehaviour
     void Start()
     {
         ship = FindAnyObjectByType<Ship>();
-        nextCheckpoint = 0;
+        nextCheckpoint = -1;
         SpawnCheckpoint();
     }
 
     void Update()
     {
-        if(ship.GetCurrentDistance >= checkpoints[nextCheckpoint].distance)
+        if (!GameManager.instance.IsRunning) return;
+
+        if (ship.GetCurrentDistance >= checkpoints[nextCheckpoint].distance)
         {
             UpdateText();
             if(nextCheckpoint >= checkpoints.Count - 1)
@@ -85,6 +87,10 @@ public class Checkpoints : MonoBehaviour
         GameManager.instance.ExitCheckpoint();
 
         FindAnyObjectByType<Police>().SkipTheDay(daysOfStaying);
+
+        if (GameManager.instance.IsRunning) return;
+
+        GameManager.instance.TakeOff();
     }
 
     public float GetTotalDistance()
@@ -92,14 +98,20 @@ public class Checkpoints : MonoBehaviour
         return checkpoints[checkpoints.Count - 1].distance;
     }
 
-    public void Resting()
-    {
-        daysOfStaying += costOfResting;
-        FindAnyObjectByType<Ship>().FullHealing();
-    }
-
     public float GetNextCheckpointDistance()
     {
         return checkpoints[nextCheckpoint].distance - ship.GetCurrentDistance;
+    }
+
+    public List<float> GetCheckpointsPosition()
+    {
+        List<float> positionList = new List<float>();
+
+        foreach (var checkpoint in checkpoints) 
+        {
+            positionList.Add(checkpoint.distance);
+        }
+
+        return positionList;
     }
 }

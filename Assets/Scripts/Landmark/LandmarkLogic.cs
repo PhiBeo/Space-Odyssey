@@ -11,6 +11,8 @@ public class LandmarkLogic : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.instance.IsRunning) return;
+
         transform.Translate(Vector2.left * GameManager.instance.GetGameSpeed * Time.deltaTime);
     }
 

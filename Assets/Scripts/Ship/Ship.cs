@@ -36,6 +36,7 @@ public class Ship : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.instance.IsRunning) return;
         if (!IsAlive()) return;
 
         currentDistance += GameManager.instance.GetGameSpeed * Time.deltaTime;
@@ -71,24 +72,9 @@ public class Ship : MonoBehaviour
         }
     }
 
-    void shipDamageRandomize()
+   public void shipHealthAdjust(float health)
     {
-        if (!IsAlive()) return;
-        if (currentHealh > percentageStartedThreshold) return;
-
-        float randomChange = Random.value * 100f;
-
-        if (randomChange <= changeOfHappen)
-        {
-            isDamage = true;
-        }
-    }
-
-    void shipDamageEvent()
-    {
-        if (!isDamage) return;
-
-        //event that can happen when ship is damage
+        currentHealh += health;
     }
 
     public void FullHealing()

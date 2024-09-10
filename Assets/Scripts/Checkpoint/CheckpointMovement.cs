@@ -6,6 +6,8 @@ public class CheckpointMovement : MonoBehaviour
 {
     void Update()
     {
+        if (!GameManager.instance.IsRunning) return;
+
         transform.Translate(Vector3.left * GameManager.instance.GetGameSpeed * Time.deltaTime);
     }
 

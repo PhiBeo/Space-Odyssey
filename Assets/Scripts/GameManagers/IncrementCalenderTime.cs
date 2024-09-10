@@ -38,6 +38,7 @@ public class IncrementCalenderTime : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.instance.IsRunning) return;
         if (!isRunning) return;
 
         time += Time.deltaTime;
@@ -45,7 +46,7 @@ public class IncrementCalenderTime : MonoBehaviour
         if(time >= timeIncreaseRate)
         {
             time = 0.0f;
-            TimeProcess();
+            TimeProcess(1);
         }
 
         year = currentTime.Year;
@@ -71,9 +72,9 @@ public class IncrementCalenderTime : MonoBehaviour
         GameManager.instance.OnExitCheckpoint -= ExitCheckpoint;
     }
 
-    void TimeProcess()
+    public void TimeProcess(int day)
     {
-        currentTime = currentTime.AddDays(1);
+        currentTime = currentTime.AddDays(day);
 
         if (currentTime.Day == 1)
         {

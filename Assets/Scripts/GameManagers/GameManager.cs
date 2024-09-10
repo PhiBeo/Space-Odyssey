@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public Action OnReachGoal;
     public Action OnNotEnoughItem;
     public Action OnNotEnoughMoney;
+    public Action OnTakeOff;
 
     //Landmark Events
     public Action OnEnterRockBelt;
@@ -38,6 +39,8 @@ public class GameManager : MonoBehaviour
     public Action OnEnterResourcePlanet;
 
     private ScenesManager sceneManager;
+
+    private bool isRunning;
 
     void Awake()
     {
@@ -60,9 +63,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         sceneManager = FindAnyObjectByType<ScenesManager>();
-        currentGamePace = defaultPace;
-        speed = Speed.normal;
+        currentGamePace = 0;
+        speed = Speed.stop;
         lastCheckpoint = false;
+        isRunning = false;
     }
 
     public void Gameover(GameoverType type)
@@ -146,8 +150,17 @@ public class GameManager : MonoBehaviour
         currentGamePace = 0;
     }
 
+    public void TakeOff()
+    {
+        speed = Speed.normal;
+        currentGamePace = defaultPace;
+        isRunning = true;
+        OnTakeOff?.Invoke();
+    }
+
     public float GetGameSpeed => currentGamePace;
     public bool IsFinish { get => lastCheckpoint; }
     public Speed Speed { get => speed; }
     public LandmarkType GetLandmarkType => currentLandmarkType;
+    public bool IsRunning => isRunning;
 }

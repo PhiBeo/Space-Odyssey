@@ -1,4 +1,4 @@
-using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,20 +11,30 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject popupMoneyUI;
     [SerializeField] private GameObject popupItemUI;
 
+    [SerializeField] private List<GameObject> disableOnOpen;
+
     private void Start()
     {
         gameplayUI.SetActive(true);
-        checkpointUI.SetActive(false);
+        checkpointUI.SetActive(true);
         shopUI.SetActive(false);
         popupUI.SetActive(false);
         popupMoneyUI.SetActive(false);
         popupItemUI.SetActive(false);
 
+        GameManager.instance.OnTakeOff += EnableInitialDisableObject;
         GameManager.instance.OnEnterCheckpoint += EnterCheckpoint;
         GameManager.instance.OnExitCheckpoint += ExitCheckpoint;
         GameManager.instance.OnReachGoal += ReachGoal;
         GameManager.instance.OnNotEnoughItem += NotEnoughItem;
         GameManager.instance.OnNotEnoughMoney += NotEnoughMoney;
+        GameManager.instance.OnEnterLandmark += DisableGameplayUI;
+        GameManager.instance.OnExitLandmark += EnableGameplayerUI;
+
+        foreach(var gameObject in disableOnOpen)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnDisable()
@@ -34,6 +44,9 @@ public class UIManager : MonoBehaviour
         GameManager.instance.OnReachGoal -= ReachGoal;
         GameManager.instance.OnNotEnoughItem -= NotEnoughItem;
         GameManager.instance.OnNotEnoughMoney -= NotEnoughMoney;
+        GameManager.instance.OnEnterLandmark -= DisableGameplayUI;
+        GameManager.instance.OnExitLandmark -= EnableGameplayerUI;
+        GameManager.instance.OnTakeOff -= EnableInitialDisableObject;
     }
 
     void EnterCheckpoint()
@@ -64,5 +77,23 @@ public class UIManager : MonoBehaviour
     {
         popupUI.SetActive(true);
         popupItemUI.SetActive(true);
+    }
+
+    void DisableGameplayUI()
+    {
+        gameplayUI.SetActive(false);
+    }
+
+    void EnableGameplayerUI()
+    {
+        gameplayUI.SetActive(true);
+    }
+
+    public void EnableInitialDisableObject()
+    {
+        foreach (var gameObject in disableOnOpen)
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

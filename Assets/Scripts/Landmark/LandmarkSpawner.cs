@@ -16,6 +16,7 @@ public class LandmarkSpawner : MonoBehaviour
     [Header("Spawning Values")]
     [SerializeField] private int minNumberOfLandmark = 2;
     [SerializeField] private int maxNumberOfLandmark = 8;
+    [SerializeField] private float distanceFromCheckpoint = 20f;
 
     [Header("Landmarks")]
     [SerializeField] private List<Lanmark> landmarksSciptableObj;
@@ -52,6 +53,18 @@ public class LandmarkSpawner : MonoBehaviour
             float position = UnityEngine.Random.Range(lastSpawnPosition + 10.0f, (i + 1) * maxDistanceBetweenLandmark);
 
             LandmarkData newLandmark = new LandmarkData();
+            foreach(var checkpoint in FindAnyObjectByType<Checkpoints>().GetCheckpointsPosition())
+            {
+                if(position > checkpoint - distanceFromCheckpoint && position < checkpoint + distanceFromCheckpoint)
+                {
+                    if (((checkpoint + distanceFromCheckpoint) + (checkpoint - distanceFromCheckpoint) / 2) > position)
+                        position = checkpoint - distanceFromCheckpoint;
+                    else position = checkpoint + distanceFromCheckpoint;
+
+                    break;
+                }
+            }
+
             newLandmark.position = position;
             int randomizer = UnityEngine.Random.Range(0, landmarksSciptableObj.Count);
             newLandmark.landmarkDatas = landmarksSciptableObj[randomizer];

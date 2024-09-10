@@ -17,6 +17,7 @@ public class LandmarkUI : MonoBehaviour
     {
         landmarkUI.SetActive(false);
         rockBeltUI.SetActive(false);
+        spacePirateUI.SetActive(false);
         alienUI.SetActive(false);
         shipYardUI.SetActive(false);
         resourcePlanetUI.SetActive(false);
@@ -56,8 +57,6 @@ public class LandmarkUI : MonoBehaviour
                 resourcePlanetUI.SetActive(true);
                 break;
         }
-
-        Debug.Log("Enter");
     }
 
     public void ExitLandmark()
@@ -69,7 +68,5 @@ public class LandmarkUI : MonoBehaviour
         spacePirateUI.SetActive(false);
         shipYardUI.SetActive(false);
         resourcePlanetUI.SetActive(false);
-
-        Debug.Log("Exit");
     }
 }

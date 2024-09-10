@@ -23,13 +23,20 @@ public class Police : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.instance.IsRunning) return;
         if (GameManager.instance.Speed == Speed.stop) return;
 
         currentDistance += speed * Time.deltaTime;
 
         float desiredSpeed = speed - GameManager.instance.GetGameSpeed;
 
-        transform.Translate(Vector2.right * desiredSpeed * Time.deltaTime);
+        transform.Translate(Vector2.right * desiredSpeed * Time.deltaTime);  
+    }
+
+    private void FixedUpdate()
+    {
+        if (transform.position.x > ship.transform.position.x)
+            GameManager.instance.Gameover(GameoverType.caught);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
