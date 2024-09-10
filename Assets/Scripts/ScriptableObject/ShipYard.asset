@@ -16,4 +16,4 @@ MonoBehaviour:
   peopleDialog: 
   type: 4
   backgroundSprite: {fileID: 0}
-  mapIcon: {fileID: 0}
+  mapIcon: {fileID: -1749255717, guid: 4851e225e206c7a479057337181103ee, type: 3}

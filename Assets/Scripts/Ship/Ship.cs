@@ -3,17 +3,13 @@ using MyBox;
 
 public class Ship : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 10000f;
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float healthRestore = 40f;
 
     [Header("Heath Drain Variable")]
     [SerializeField, Range(0f, 3f)] private float defaultSpeed = 0.1f;
     [SerializeField, Range(0f, 3f)] private float slowSpeed = 0.05f;
     [SerializeField, Range(0f, 3f)] private float fastSpeed = 1.5f;
-
-    [Header("Ship Damage Properties")]
-    [Tooltip("Percentage of health that ship damage start to happen")]
-    [SerializeField, Range(0f, 100f)] private float percentageStartedThreshold = 70f;
-    [SerializeField, Range(0f, 100f)] private float changeOfHappen = 10f;
 
     [Header("Ship trail")]
     [SerializeField] private Sprite[] shipTrailSprites = new Sprite[3];
@@ -91,6 +87,12 @@ public class Ship : MonoBehaviour
     public bool IsAlive()
     {
         return currentHealh > 0;
+    }
+
+    public void FixShip()
+    {
+        resources.RemoveItem(ItemId.tool, 1, 1);
+        PartialHealing(healthRestore);
     }
 
     public float GetHealth => currentHealh;

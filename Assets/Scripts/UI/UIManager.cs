@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private List<GameObject> disableOnOpen;
 
+    [SerializeField] private List<Button> speedButtons;
+    [SerializeField] private Color buttonColor;
+
     private void Start()
     {
         gameplayUI.SetActive(true);
@@ -30,11 +33,16 @@ public class UIManager : MonoBehaviour
         GameManager.instance.OnNotEnoughMoney += NotEnoughMoney;
         GameManager.instance.OnEnterLandmark += DisableGameplayUI;
         GameManager.instance.OnExitLandmark += EnableGameplayerUI;
+        GameManager.instance.OnSpeedChange += SpeedChange;
 
         foreach(var gameObject in disableOnOpen)
         {
             gameObject.SetActive(false);
         }
+
+        GameManager.instance.EnterCheckpoint();
+
+        buttonColor = Color.magenta;
     }
 
     private void OnDisable()
@@ -47,6 +55,7 @@ public class UIManager : MonoBehaviour
         GameManager.instance.OnEnterLandmark -= DisableGameplayUI;
         GameManager.instance.OnExitLandmark -= EnableGameplayerUI;
         GameManager.instance.OnTakeOff -= EnableInitialDisableObject;
+        GameManager.instance.OnSpeedChange -= SpeedChange;
     }
 
     void EnterCheckpoint()
@@ -94,6 +103,28 @@ public class UIManager : MonoBehaviour
         foreach (var gameObject in disableOnOpen)
         {
             gameObject.SetActive(true);
+        }
+    }
+
+    public void SpeedChange()
+    {
+        for (int i = 0; i < speedButtons.Count; i++)
+        {
+            speedButtons[i].GetComponent<Image>().color = Color.white;
+        }
+
+        switch (GameManager.instance.Speed)
+        {
+            case Speed.fast:
+                speedButtons[2].GetComponent<Image>().color = buttonColor;
+                break;
+            case Speed.normal:
+                speedButtons[1].GetComponent<Image>().color = buttonColor;
+                break;
+            case Speed.slow:
+                speedButtons[0].GetComponent<Image>().color = buttonColor;
+                break;
+            
         }
     }
 }

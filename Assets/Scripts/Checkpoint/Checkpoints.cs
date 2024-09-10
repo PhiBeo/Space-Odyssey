@@ -20,11 +20,11 @@ public class Checkpoints : MonoBehaviour
 
     [SerializeField] private GameObject checkPointPrefab;
     [SerializeField] private Transform checkPointParent;
-    [SerializeField] private int costOfResting = 2;
 
     [Header("UI Values")]
     [SerializeField] private TextMeshProUGUI nextCheckpointDistanceText;
     [SerializeField] private TextMeshProUGUI currentDistanceText;
+    [SerializeField] private TextMeshProUGUI disanceFromPoliceText;
     
     [Header("Debug Values")]
     [ReadOnly, SerializeField] private int nextCheckpoint;
@@ -77,6 +77,7 @@ public class Checkpoints : MonoBehaviour
     {
         nextCheckpointDistanceText.text = Mathf.RoundToInt(GetNextCheckpointDistance()).ToString() + " Units";
         currentDistanceText.text = Mathf.RoundToInt(ship.GetCurrentDistance).ToString() + " Units";
+        disanceFromPoliceText.text = Mathf.RoundToInt(ship.transform.position.x - FindAnyObjectByType<Police>().transform.position.x).ToString() + " Units";
     }
 
     public void NextCheckpoint()

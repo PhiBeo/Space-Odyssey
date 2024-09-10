@@ -67,7 +67,7 @@ public class RockBelt : MonoBehaviour
         }
         else
         {
-            actionTakenText.text = $"You go through the rock belt and lost {healthLost}";
+            actionTakenText.text = $"You go through the rock belt and lose some health";
         }
     }
 

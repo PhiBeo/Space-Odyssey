@@ -91,11 +91,11 @@ public class ShipYard : MonoBehaviour
 
         if(foundSomething)
         {
-            actionText.text = LootFounded() + $"\n\nDamage Taken: {damageTaken}";
+            actionText.text = LootFounded() + $"\n\nYour ship took some damage";
         }
         else
         {
-            actionText.text = $"You found nothing\n\nDamage Taken: {damageTaken}";
+            actionText.text = $"You found nothing\n\nYour ship took some damage";
         }
     }
 

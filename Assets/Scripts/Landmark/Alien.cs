@@ -15,10 +15,12 @@ public class Alien : MonoBehaviour
 {
     [Header("Alien Values")]
     [SerializeField, Range(0f, 100f)] private float chanceOfAttack = 75f;
-    [SerializeField, Range(0f, 100f)] private float chanceOfGift = 15f;
+    [SerializeField, Range(0f, 100f)] private float chanceOfGift = 100f;
     [SerializeField, Range(0f, 100f)] private float chanceOfNothing = 10f;
-    [SerializeField, Range(0f, 100f)] private float minDamage = 5f;
-    [SerializeField, Range(0f, 100f)] private float maxDamage = 20f;
+    [SerializeField] private float minDamage = 5f;
+    [SerializeField] private float maxDamage = 20f;
+    [SerializeField] private int maxFuelGiven = 20;
+    [SerializeField] private int maxToolGiven = 2;
 
     [Header("UI Values")]
     [SerializeField] private GameObject dialogUI;
@@ -45,7 +47,7 @@ public class Alien : MonoBehaviour
         dialogUI.SetActive(true);
         actionUI.SetActive(false);
         ship = FindAnyObjectByType<Ship>();
-        resources = GetComponent<Resources>();
+        resources = FindAnyObjectByType<Resources>();
 
         GameManager.instance.OnExitLandmark += ResetUI;
     }
@@ -58,7 +60,6 @@ public class Alien : MonoBehaviour
     public void AlienActionDice()
     {
         float chance = UnityEngine.Random.Range(0f, 100f);
-        Debug.Log("Alien Roll: " + chance);
 
         if (chance >= 0f && chance <= chanceOfNothing)
             alienAction = AlienAction.nothing;
@@ -76,7 +77,7 @@ public class Alien : MonoBehaviour
 
         ship.shipHealthAdjust(-damage);
 
-        return "Damage Done: " + Mathf.RoundToInt(damage).ToString();
+        return "You lose some health ";
     }
 
     private string Gift()
@@ -84,7 +85,7 @@ public class Alien : MonoBehaviour
         var numberOfType = System.Enum.GetValues(typeof(ItemId)).Length;
         var pickedId = UnityEngine.Random.Range(0, numberOfType);
 
-        int amountOfItemGiven = UnityEngine.Random.Range(1, Mathf.FloorToInt(resources.CheckItemAmount((ItemId)pickedId) / 2));
+        int amountOfItemGiven = UnityEngine.Random.Range(1, ((ItemId)pickedId == ItemId.fuel ? maxFuelGiven : maxToolGiven));
 
         resources.AddItem((ItemId)pickedId, amountOfItemGiven, 1);
 

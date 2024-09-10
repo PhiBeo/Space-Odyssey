@@ -29,6 +29,8 @@ public class ItemManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI moneyText;
+    [SerializeField] private TextMeshProUGUI fuelText;
+    [SerializeField] private TextMeshProUGUI ToolText;
     public Action OnUIUpdate;
 
     private Resources resources;
@@ -47,7 +49,7 @@ public class ItemManager : MonoBehaviour
 
     private void Update()
     {
-        
+        UpdateUI();
     }
 
     void SpawnItem(ItemData data)
@@ -68,5 +70,7 @@ public class ItemManager : MonoBehaviour
     void UpdateUI()
     {
         moneyText.text = "Budget: " + resources.GetMoney.ToString() + "$";
+        fuelText.text = "Fuel: " + Mathf.RoundToInt(resources.GetFuel).ToString();
+        ToolText.text = "Tool: " + resources.GetTool;
     }
 }

@@ -84,8 +84,6 @@ public class SpacePirate : MonoBehaviour
 
         getRobbed = UnityEngine.Random.Range(0,2) > 0 ? true : false;
 
-        Debug.Log(getRobbed);
-
         UpdateUI();
     }
 

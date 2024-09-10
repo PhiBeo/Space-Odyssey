@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public Action OnNotEnoughItem;
     public Action OnNotEnoughMoney;
     public Action OnTakeOff;
+    public Action OnSpeedChange;
 
     //Landmark Events
     public Action OnEnterRockBelt;
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         currentGamePace = defaultPace;
         speed = Speed.normal;
         OnExitCheckpoint?.Invoke();
+        UpdateSpeedUI();
     }
 
     public void EnterLandmark(LandmarkType type)
@@ -105,6 +107,7 @@ public class GameManager : MonoBehaviour
         speed = Speed.normal;
         OnExitLandmark?.Invoke();
         currentLandmarkType = LandmarkType.None;
+        UpdateSpeedUI();
     }
 
     public void ReachGoal()
@@ -130,18 +133,21 @@ public class GameManager : MonoBehaviour
     {
         speed = Speed.slow;
         currentGamePace = slowPace;
+        UpdateSpeedUI();
     }
 
     public void SetFastSpeed()
     {
         speed = Speed.fast;
         currentGamePace = fastPace;
+        UpdateSpeedUI();
     }
 
     public void SetNormalSpeed()
     {
         speed = Speed.normal;
         currentGamePace = defaultPace;
+        UpdateSpeedUI();
     }
 
     public void ShipSetting()
@@ -156,6 +162,17 @@ public class GameManager : MonoBehaviour
         currentGamePace = defaultPace;
         isRunning = true;
         OnTakeOff?.Invoke();
+        UpdateSpeedUI();
+    }
+
+    public void UpdateSpeedUI()
+    {
+        OnSpeedChange?.Invoke();
+    }
+
+    public void EnableGameObject(GameObject gameObject)
+    {
+        gameObject.SetActive(true);
     }
 
     public float GetGameSpeed => currentGamePace;
