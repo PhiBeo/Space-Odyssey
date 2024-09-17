@@ -24,9 +24,13 @@ public class VideoTracker : MonoBehaviour
         if (timeTracker > videoLength)
         {
             if (sceneType == SceneType.Intro)
+            {
                 GameManager.instance.FinishClip(true);
+            }
             else if (sceneType == SceneType.Outro)
+            {
                 GameManager.instance.FinishClip(false);
+            }
         }
 
         timeTracker += Time.deltaTime;

@@ -20,19 +20,20 @@ public class ScenesManager : MonoBehaviour
             if (gameWin)
             {
                 GameManager.instance.SetSceneType(SceneType.Outro);
-                SceneManager.LoadScene("GameWin");
+                SceneManager.LoadScene("Outro");
+                gameWin = false;
             }
             else if (gameLost)
             {
                 GameManager.instance.SetSceneType(SceneType.Gameover);
                 SceneManager.LoadScene("GameOver");
+                gameLost = false;
             }
             countDown = 3f;
         }
     }
     public void GameoverScene()
     {
-        GameManager.instance.SetSceneType(SceneType.Intro);
         gameLost = true;
     }
 
@@ -51,5 +52,28 @@ public class ScenesManager : MonoBehaviour
     {
         GameManager.instance.SetSceneType(SceneType.Intro);
         SceneManager.LoadScene("Intro");
+    }
+
+    public void EnterOutroCutscene()
+    {
+        GameManager.instance.SetSceneType(SceneType.Outro);
+        SceneManager.LoadScene("Outro");
+    }
+
+    public void EnterGamewinScene()
+    {
+        GameManager.instance.SetSceneType(SceneType.Gamewin);
+        SceneManager.LoadScene("GameWin");
+    }
+
+    public void EnterMainMenu()
+    {
+        GameManager.instance.SetSceneType(SceneType.MainMenu);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

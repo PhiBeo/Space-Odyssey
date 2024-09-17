@@ -36,12 +36,12 @@ public class ShipYard : MonoBehaviour
         ship = FindAnyObjectByType<Ship>();
         resources = FindAnyObjectByType<Resources>();
 
-        GameManager.instance.OnExitLandmark += resetUI;
+        GameplayManager.instance.OnExitLandmark += resetUI;
     }
 
     private void OnDisable()
     {
-        GameManager.instance.OnExitLandmark -= resetUI;
+        GameplayManager.instance.OnExitLandmark -= resetUI;
     }
 
     public void LootTheSpaceShip()

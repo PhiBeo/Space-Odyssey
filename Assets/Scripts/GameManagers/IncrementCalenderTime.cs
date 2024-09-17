@@ -32,13 +32,13 @@ public class IncrementCalenderTime : MonoBehaviour
         month = currentTime.Month;
         day = currentTime.Day;
 
-        GameManager.instance.OnEnterCheckpoint += EnterCheckpoint;
-        GameManager.instance.OnExitCheckpoint += ExitCheckpoint;
+        GameplayManager.instance.OnEnterCheckpoint += EnterCheckpoint;
+        GameplayManager.instance.OnExitCheckpoint += ExitCheckpoint;
     }
 
     void Update()
     {
-        if (!GameManager.instance.IsRunning) return;
+        if (!GameplayManager.instance.IsRunning) return;
         if (!isRunning) return;
 
         time += Time.deltaTime;
@@ -68,8 +68,8 @@ public class IncrementCalenderTime : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.instance.OnEnterCheckpoint -= EnterCheckpoint;
-        GameManager.instance.OnExitCheckpoint -= ExitCheckpoint;
+        GameplayManager.instance.OnEnterCheckpoint -= EnterCheckpoint;
+        GameplayManager.instance.OnExitCheckpoint -= ExitCheckpoint;
     }
 
     public void TimeProcess(int day)

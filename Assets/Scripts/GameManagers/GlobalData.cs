@@ -12,7 +12,8 @@ public enum GameoverType
 { 
     caught,
     fuel,
-    health
+    health,
+    none
 }
 
 public enum SceneType
@@ -21,7 +22,8 @@ public enum SceneType
     Intro,
     Gameplay,
     Outro,
-    Gameover
+    Gameover,
+    Gamewin
 }
 
 

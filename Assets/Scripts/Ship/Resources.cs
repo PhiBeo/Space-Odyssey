@@ -26,13 +26,13 @@ public class Resources : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.instance.IsRunning) return;
+        if (!GameplayManager.instance.IsRunning) return;
 
         UpdateFuel();
 
         if (currentFuel <= 0)
         {
-            GameManager.instance.Gameover(GameoverType.fuel);
+            GameplayManager.instance.Gameover(GameoverType.fuel);
         }
     }
 
@@ -42,7 +42,7 @@ public class Resources : MonoBehaviour
 
         float currentMultiplier = 0;
 
-        switch (GameManager.instance.Speed)
+        switch (GameplayManager.instance.Speed)
         {
             case Speed.stop:
                 currentMultiplier = 0f; break;
@@ -54,7 +54,7 @@ public class Resources : MonoBehaviour
                 currentMultiplier = fastTravel; break;  
         }
 
-        floatFuel += GameManager.instance.GetGameSpeed * Time.deltaTime * currentMultiplier;
+        floatFuel += GameplayManager.instance.GetGameSpeed * Time.deltaTime * currentMultiplier;
         if(floatFuel >= 2.0f)
         {
             currentFuel -= 2;

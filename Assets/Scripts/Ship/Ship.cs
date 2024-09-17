@@ -32,23 +32,23 @@ public class Ship : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.instance.IsRunning) return;
+        if (!GameplayManager.instance.IsRunning) return;
         if (!IsAlive()) return;
 
-        currentDistance += GameManager.instance.GetGameSpeed * Time.deltaTime;
+        currentDistance += GameplayManager.instance.GetGameSpeed * Time.deltaTime;
 
         CheckSpeed();
         currentHealh -= currentHealthDrainSpeed * Time.deltaTime;
         if(!IsAlive())
         {
-            GameManager.instance.Gameover(GameoverType.health);
+            GameplayManager.instance.Gameover(GameoverType.health);
         }
     }
 
     void CheckSpeed()
     {
-        trailRender.enabled = (GameManager.instance.Speed == Speed.stop ? false : true);
-        switch (GameManager.instance.Speed)
+        trailRender.enabled = (GameplayManager.instance.Speed == Speed.stop ? false : true);
+        switch (GameplayManager.instance.Speed)
         {
             case Speed.stop:
                 currentHealthDrainSpeed = 0f;

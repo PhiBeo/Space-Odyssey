@@ -21,8 +21,8 @@ public class BackgroundMovement : MonoBehaviour
 
     void Update()
     {
-        bg1.transform.Translate(Vector2.left * GameManager.instance.GetGameSpeed * Time.deltaTime);
-        bg2.transform.Translate(Vector2.left * GameManager.instance.GetGameSpeed * Time.deltaTime);
+        bg1.transform.Translate(Vector2.left * GameplayManager.instance.GetGameSpeed * Time.deltaTime);
+        bg2.transform.Translate(Vector2.left * GameplayManager.instance.GetGameSpeed * Time.deltaTime);
 
         float distanceToMove = (spriteSize.x / 2) + (cameraSize.x / 2);
 

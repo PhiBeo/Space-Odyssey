@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject popupUI;
     [SerializeField] private GameObject popupMoneyUI;
     [SerializeField] private GameObject popupItemUI;
+    [SerializeField] private GameObject pauseMenuUI;
 
     [SerializeField] private List<GameObject> disableOnOpen;
 
@@ -24,38 +25,45 @@ public class UIManager : MonoBehaviour
         popupUI.SetActive(false);
         popupMoneyUI.SetActive(false);
         popupItemUI.SetActive(false);
+        pauseMenuUI.SetActive(false);
 
-        GameManager.instance.OnTakeOff += EnableInitialDisableObject;
-        GameManager.instance.OnEnterCheckpoint += EnterCheckpoint;
-        GameManager.instance.OnExitCheckpoint += ExitCheckpoint;
-        GameManager.instance.OnReachGoal += ReachGoal;
-        GameManager.instance.OnNotEnoughItem += NotEnoughItem;
-        GameManager.instance.OnNotEnoughMoney += NotEnoughMoney;
-        GameManager.instance.OnEnterLandmark += DisableGameplayUI;
-        GameManager.instance.OnExitLandmark += EnableGameplayerUI;
-        GameManager.instance.OnSpeedChange += SpeedChange;
+        GameplayManager.instance.OnTakeOff += EnableInitialDisableObject;
+        GameplayManager.instance.OnEnterCheckpoint += EnterCheckpoint;
+        GameplayManager.instance.OnExitCheckpoint += ExitCheckpoint;
+        GameplayManager.instance.OnReachGoal += ReachGoal;
+        GameplayManager.instance.OnNotEnoughItem += NotEnoughItem;
+        GameplayManager.instance.OnNotEnoughMoney += NotEnoughMoney;
+        GameplayManager.instance.OnEnterLandmark += DisableGameplayUI;
+        GameplayManager.instance.OnExitLandmark += EnableGameplayerUI;
+        GameplayManager.instance.OnSpeedChange += SpeedChange;
+        GameplayManager.instance.OnGameOver += GameoverUI;
+        GameplayManager.instance.OnPauseGame += PauseGame;
+        GameplayManager.instance.OnUnpauseGame += UnpauseGame;
 
         foreach(var gameObject in disableOnOpen)
         {
             gameObject.SetActive(false);
         }
 
-        GameManager.instance.EnterCheckpoint();
+        GameplayManager.instance.EnterCheckpoint();
 
         buttonColor = Color.magenta;
     }
 
     private void OnDisable()
     {
-        GameManager.instance.OnEnterCheckpoint -= EnterCheckpoint;
-        GameManager.instance.OnExitCheckpoint -= ExitCheckpoint;
-        GameManager.instance.OnReachGoal -= ReachGoal;
-        GameManager.instance.OnNotEnoughItem -= NotEnoughItem;
-        GameManager.instance.OnNotEnoughMoney -= NotEnoughMoney;
-        GameManager.instance.OnEnterLandmark -= DisableGameplayUI;
-        GameManager.instance.OnExitLandmark -= EnableGameplayerUI;
-        GameManager.instance.OnTakeOff -= EnableInitialDisableObject;
-        GameManager.instance.OnSpeedChange -= SpeedChange;
+        GameplayManager.instance.OnEnterCheckpoint -= EnterCheckpoint;
+        GameplayManager.instance.OnExitCheckpoint -= ExitCheckpoint;
+        GameplayManager.instance.OnReachGoal -= ReachGoal;
+        GameplayManager.instance.OnNotEnoughItem -= NotEnoughItem;
+        GameplayManager.instance.OnNotEnoughMoney -= NotEnoughMoney;
+        GameplayManager.instance.OnEnterLandmark -= DisableGameplayUI;
+        GameplayManager.instance.OnExitLandmark -= EnableGameplayerUI;
+        GameplayManager.instance.OnTakeOff -= EnableInitialDisableObject;
+        GameplayManager.instance.OnSpeedChange -= SpeedChange;
+        GameplayManager.instance.OnGameOver -= GameoverUI;
+        GameplayManager.instance.OnPauseGame -= PauseGame;
+        GameplayManager.instance.OnUnpauseGame -= UnpauseGame;
     }
 
     void EnterCheckpoint()
@@ -98,6 +106,16 @@ public class UIManager : MonoBehaviour
         gameplayUI.SetActive(true);
     }
 
+    void GameoverUI()
+    {
+        gameplayUI.SetActive(true);
+        checkpointUI.SetActive(false);
+        shopUI.SetActive(false);
+        popupUI.SetActive(false);
+        popupMoneyUI.SetActive(false);
+        popupItemUI.SetActive(false);
+    }
+
     public void EnableInitialDisableObject()
     {
         foreach (var gameObject in disableOnOpen)
@@ -113,7 +131,7 @@ public class UIManager : MonoBehaviour
             speedButtons[i].GetComponent<Image>().color = Color.white;
         }
 
-        switch (GameManager.instance.Speed)
+        switch (GameplayManager.instance.Speed)
         {
             case Speed.fast:
                 speedButtons[2].GetComponent<Image>().color = buttonColor;
@@ -126,5 +144,15 @@ public class UIManager : MonoBehaviour
                 break;
             
         }
+    }
+
+    public void PauseGame()
+    {
+        pauseMenuUI.SetActive(true);
+    }
+
+    public void UnpauseGame()
+    {
+        pauseMenuUI.SetActive(false );
     }
 }

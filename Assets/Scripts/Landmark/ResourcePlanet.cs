@@ -30,12 +30,12 @@ public class ResourcePlanet : MonoBehaviour
         ship = FindAnyObjectByType<Ship>();
         resources = FindAnyObjectByType<Resources>();
 
-        GameManager.instance.OnExitLandmark += resetUI;
+        GameplayManager.instance.OnExitLandmark += resetUI;
     }
 
     private void OnDisable()
     {
-        GameManager.instance.OnExitLandmark -= resetUI;
+        GameplayManager.instance.OnExitLandmark -= resetUI;
     } 
 
     private void UpdateUI()

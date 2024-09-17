@@ -11,16 +11,16 @@ public class LandmarkLogic : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.instance.IsRunning) return;
+        if (!GameplayManager.instance.IsRunning) return;
 
-        transform.Translate(Vector2.left * GameManager.instance.GetGameSpeed * Time.deltaTime);
+        transform.Translate(Vector2.left * GameplayManager.instance.GetGameSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            GameManager.instance.EnterLandmark(landmarkData.landmarkDatas.type);
+            GameplayManager.instance.EnterLandmark(landmarkData.landmarkDatas.type);
             var box = GetComponent<BoxCollider2D>();
             Destroy(box);
         }

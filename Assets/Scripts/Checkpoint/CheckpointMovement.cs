@@ -6,9 +6,9 @@ public class CheckpointMovement : MonoBehaviour
 {
     void Update()
     {
-        if (!GameManager.instance.IsRunning) return;
+        if (!GameplayManager.instance.IsRunning) return;
 
-        transform.Translate(Vector3.left * GameManager.instance.GetGameSpeed * Time.deltaTime);
+        transform.Translate(Vector3.left * GameplayManager.instance.GetGameSpeed * Time.deltaTime);
     }
 
     public void SetPosition(float xPostition)

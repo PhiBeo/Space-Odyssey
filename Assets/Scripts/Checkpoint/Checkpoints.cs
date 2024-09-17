@@ -40,18 +40,18 @@ public class Checkpoints : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.instance.IsRunning) return;
+        if (!GameplayManager.instance.IsRunning) return;
 
         if (ship.GetCurrentDistance >= checkpoints[nextCheckpoint].distance)
         {
             UpdateText();
             if(nextCheckpoint >= checkpoints.Count - 1)
             {
-                GameManager.instance.ReachGoal();
+                GameplayManager.instance.ReachGoal();
             }
             else
             {
-                GameManager.instance.EnterCheckpoint();
+                GameplayManager.instance.EnterCheckpoint();
             }
         }
 
@@ -85,13 +85,13 @@ public class Checkpoints : MonoBehaviour
         if (nextCheckpoint >= checkpoints.Count - 1) return;
 
         nextCheckpoint++;
-        GameManager.instance.ExitCheckpoint();
+        GameplayManager.instance.ExitCheckpoint();
 
         FindAnyObjectByType<Police>().SkipTheDay(daysOfStaying);
 
-        if (GameManager.instance.IsRunning) return;
+        if (GameplayManager.instance.IsRunning) return;
 
-        GameManager.instance.TakeOff();
+        GameplayManager.instance.TakeOff();
     }
 
     public float GetTotalDistance()

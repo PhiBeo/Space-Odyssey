@@ -44,7 +44,7 @@ public class ItemManager : MonoBehaviour
             SpawnItem(item);
         }
 
-        GameManager.instance.OnEnterCheckpoint += UpdateUI;
+        GameplayManager.instance.OnEnterCheckpoint += UpdateUI;
     }
 
     private void Update()
@@ -58,8 +58,8 @@ public class ItemManager : MonoBehaviour
         ItemPurchase item = newItem.GetComponent<ItemPurchase>();
         item.SetData(data);
         item.OnItemPurchase += UpdateUI;
-        item.OnNotEnoughItem += GameManager.instance.NotEnoughItem;
-        item.OnNotEnoughMoney += GameManager.instance.NotEnoughMoney;
+        item.OnNotEnoughItem += GameplayManager.instance.NotEnoughItem;
+        item.OnNotEnoughMoney += GameplayManager.instance.NotEnoughMoney;
         var button = newItem.GetComponentsInChildren<Button>();
         button[0].onClick.AddListener(item.DecreaseQuantity);
         button[1].onClick.AddListener(item.IncreaseQuantity);

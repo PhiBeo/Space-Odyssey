@@ -49,12 +49,12 @@ public class Alien : MonoBehaviour
         ship = FindAnyObjectByType<Ship>();
         resources = FindAnyObjectByType<Resources>();
 
-        GameManager.instance.OnExitLandmark += ResetUI;
+        GameplayManager.instance.OnExitLandmark += ResetUI;
     }
 
     private void OnDisable()
     {
-        GameManager.instance.OnExitLandmark -= ResetUI;
+        GameplayManager.instance.OnExitLandmark -= ResetUI;
     }
 
     public void AlienActionDice()

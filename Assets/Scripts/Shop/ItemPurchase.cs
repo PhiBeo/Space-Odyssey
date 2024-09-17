@@ -44,7 +44,7 @@ public class ItemPurchase : MonoBehaviour
     {
         if (resources.GetMoney <= 0 || itemData.quantity * itemData.price > resources.GetMoney)
         {
-            GameManager.instance.NotEnoughMoney();
+            GameplayManager.instance.NotEnoughMoney();
             return;
         }
 
@@ -58,7 +58,7 @@ public class ItemPurchase : MonoBehaviour
     {
         if (itemData.quantity * itemData.perPurchase > resources.CheckItemAmount(itemData.id))
         {
-            GameManager.instance.NotEnoughItem();
+            GameplayManager.instance.NotEnoughItem();
             return;
         }
 

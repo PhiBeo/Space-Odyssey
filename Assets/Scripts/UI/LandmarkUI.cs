@@ -22,24 +22,24 @@ public class LandmarkUI : MonoBehaviour
         shipYardUI.SetActive(false);
         resourcePlanetUI.SetActive(false);
 
-        GameManager.instance.OnEnterLandmark += EnterLandmark;
-        GameManager.instance.OnExitLandmark += ExitLandmark;
+        GameplayManager.instance.OnEnterLandmark += EnterLandmark;
+        GameplayManager.instance.OnExitLandmark += ExitLandmark;
     }
 
     private void OnDisable()
     {
-        GameManager.instance.OnEnterLandmark -= EnterLandmark;
-        GameManager.instance.OnExitLandmark -= ExitLandmark;
+        GameplayManager.instance.OnEnterLandmark -= EnterLandmark;
+        GameplayManager.instance.OnExitLandmark -= ExitLandmark;
     }
 
     public void EnterLandmark()
     {
         landmarkUI.SetActive(true);
 
-        switch (GameManager.instance.GetLandmarkType)
+        switch (GameplayManager.instance.GetLandmarkType)
         {
             case LandmarkType.None:
-                GameManager.instance.ExitLandmark();
+                GameplayManager.instance.ExitLandmark();
                 break;
             case LandmarkType.RockBelt:
                 rockBeltUI.SetActive(true);

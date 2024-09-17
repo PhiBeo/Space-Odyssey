@@ -26,12 +26,12 @@ public class SpacePirate : MonoBehaviour
         pirateUI.SetActive(false);
         ship = FindAnyObjectByType<Ship>();
         resources = FindAnyObjectByType<Resources>();
-        GameManager.instance.OnExitLandmark += ResetUI;
+        GameplayManager.instance.OnExitLandmark += ResetUI;
     }
 
     private void OnDisable()
     {
-        GameManager.instance.OnExitLandmark -= ResetUI;
+        GameplayManager.instance.OnExitLandmark -= ResetUI;
     }
 
     private void UpdateUI()

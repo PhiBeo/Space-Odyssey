@@ -29,12 +29,12 @@ public class RockBelt : MonoBehaviour
         police = FindAnyObjectByType<Police>();
         actionTakenUI.SetActive(false);
 
-        GameManager.instance.OnExitLandmark += ResetUI;
+        GameplayManager.instance.OnExitLandmark += ResetUI;
     }
 
     private void OnDisable()
     {
-        GameManager.instance.OnExitLandmark -= ResetUI;
+        GameplayManager.instance.OnExitLandmark -= ResetUI;
     }
 
     public void GoAroundRockBelt()
