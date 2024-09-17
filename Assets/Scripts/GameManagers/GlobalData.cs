@@ -15,6 +15,16 @@ public enum GameoverType
     health
 }
 
+public enum SceneType
+{ 
+    MainMenu,
+    Intro,
+    Gameplay,
+    Outro,
+    Gameover
+}
+
+
 public static class GlobalData
 {
     public static Dictionary<int, string> monthNumToString = new Dictionary<int, string>()

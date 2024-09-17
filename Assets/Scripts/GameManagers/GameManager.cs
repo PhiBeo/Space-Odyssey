@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [ReadOnly, SerializeField]private Speed speed;
     [ReadOnly, SerializeField] private LandmarkType currentLandmarkType = LandmarkType.None;
     [ReadOnly, SerializeField] private GameoverType gameoverType;
+    [ReadOnly, SerializeField] private SceneType sceneType;
     private bool lastCheckpoint = false;
 
     //Events
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
     public Action OnEnterShipYard;
     public Action OnEnterResourcePlanet;
 
-    private ScenesManager sceneManager;
+    [SerializeField]private ScenesManager sceneManager;
 
     private bool isRunning;
 
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        sceneManager = FindAnyObjectByType<ScenesManager>();
+        sceneType = SceneType.MainMenu;
         currentGamePace = 0;
         speed = Speed.stop;
         lastCheckpoint = false;
@@ -175,9 +176,28 @@ public class GameManager : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public void SetSceneType(SceneType type)
+    {
+        sceneType = type;
+    }
+
+    public void FinishClip(bool isIntro)
+    {
+        if (isIntro)
+        {
+            sceneManager.EnterGameplayScene();
+        }
+        else
+        {
+            sceneManager.GameWinScene();
+        }
+    }
+
     public float GetGameSpeed => currentGamePace;
     public bool IsFinish { get => lastCheckpoint; }
     public Speed Speed { get => speed; }
     public LandmarkType GetLandmarkType => currentLandmarkType;
     public bool IsRunning => isRunning;
+
+    public SceneType GetSceneType => sceneType;
 }

@@ -115,4 +115,16 @@ public class Checkpoints : MonoBehaviour
 
         return positionList;
     }
+
+    public float[] GetCheckpointPosition()
+    {
+        float[] distances = new float[checkpoints.Count];
+
+        for (int i = 0; i < checkpoints.Count; i++)
+        {
+            distances[i] = checkpoints[i].distance;
+        }
+
+        return distances;
+    }
 }

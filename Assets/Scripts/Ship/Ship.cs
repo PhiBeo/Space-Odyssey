@@ -91,6 +91,7 @@ public class Ship : MonoBehaviour
 
     public void FixShip()
     {
+        if(resources.GetTool <= 0) return;
         resources.RemoveItem(ItemId.tool, 1, 1);
         PartialHealing(healthRestore);
     }
