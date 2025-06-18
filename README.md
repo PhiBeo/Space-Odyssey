@@ -1,6 +1,6 @@
 # 🚀 **Space Odyssey**
 
-**Space Trail** is a Unity-based narrative resource-management game set in a dystopian future where Earth has become a wasteland. Inspired by the classic *Oregon Trail*, this game challenges you and your crew to escape the ruins of Earth by stealing a spaceship and surviving the perilous journey through space. Manage your fuel, tools, ship health, and money wisely—or risk death in the silent void.
+**Space Odyssey** is a Unity-based narrative resource-management game set in a dystopian future where Earth has become a wasteland. Inspired by the classic *Oregon Trail*, this game challenges you and your crew to escape the ruins of Earth by stealing a spaceship and surviving the perilous journey through space. Manage your fuel, tools, ship health, and money wisely—or risk death in the silent void.
 
 ## 📖 Story
 
